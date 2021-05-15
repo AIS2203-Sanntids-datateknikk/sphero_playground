@@ -16,7 +16,7 @@ else ()
   message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first!")
 endif ()
 
-file(COPY images DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
+file(COPY images DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(examples)
 

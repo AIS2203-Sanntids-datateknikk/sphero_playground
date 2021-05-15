@@ -1,13 +1,12 @@
-#include <cstdio>
+#include <iostream>
 #include <opencv2/opencv.hpp>
 
 using namespace cv;
 
 int main() {
-    Mat image;
-    image = imread("../images/Lenna.png", 1);
+    Mat image = imread("../images/Lenna.png", 1);
     if (!image.data) {
-        printf("No image data \n");
+        std::cout <<"No image data" <<std::endl;
         return -1;
     }
     namedWindow("Display Image", WINDOW_AUTOSIZE);

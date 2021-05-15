@@ -1,11 +1,9 @@
 #include "opencv2/core/utility.hpp"
 #include "opencv2/highgui.hpp"
-#include "opencv2/imgcodecs.hpp"
 #include "opencv2/imgproc.hpp"
-#include <cstdio>
+#include <iostream>
 
 using namespace cv;
-using namespace std;
 
 namespace {
 
@@ -35,10 +33,10 @@ namespace {
 }// namespace
 
 int main() {
-    string filename = "../images/Lenna.png";
+    std::string filename("../images/Lenna.png");
     image = imread(filename, IMREAD_COLOR);
     if (image.empty()) {
-        printf("Cannot read image file: %s\n", filename.c_str());
+        std::cout <<"Cannot read image file: " << filename << std::endl;
         return -1;
     }
     cedge.create(image.size(), image.type());

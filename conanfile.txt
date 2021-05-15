@@ -3,3 +3,7 @@ opencv/4.5.2
 
 [generators]
 cmake
+
+[imports]
+res, haarcascades* -> cascades
+res, lbpcascades* -> cascades
