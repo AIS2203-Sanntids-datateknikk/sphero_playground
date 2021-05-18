@@ -1,6 +1,4 @@
 #include "detect_face.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/objdetect.hpp"
 
 #include <iostream>
 
