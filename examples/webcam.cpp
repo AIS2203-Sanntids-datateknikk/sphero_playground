@@ -29,7 +29,7 @@ int main()
     std::thread t([&stop, &capture, &image, &cascade, &nestedCascade] {
         while (!stop && capture.isOpened()) {
             capture >> image;
-            detect(image, cascade, nestedCascade);
+            detect_face(image, cascade, nestedCascade);
             imshow("Display Image", image);
         }
     });

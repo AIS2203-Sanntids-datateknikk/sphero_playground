@@ -7,30 +7,20 @@
 #include <opencv2/objdetect.hpp>
 
 #include <iostream>
+#include <optional>
 
 using namespace cv;
 
 namespace
 {
 
-void detect(
+std::optional<Point> detect_face(
     Mat& img,
     CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade)
 {
-
-    double t = 0;
-    std::vector<Rect> faces, faces2;
-    const static Scalar colors[] =
-        {
-            Scalar(255, 0, 0),
-            Scalar(255, 128, 0),
-            Scalar(255, 255, 0),
-            Scalar(0, 255, 0),
-            Scalar(0, 128, 255),
-            Scalar(0, 255, 255),
-            Scalar(0, 0, 255),
-            Scalar(255, 0, 255)};
+    double t;
+    std::vector<Rect> faces;
     Mat gray, smallImg;
     cvtColor(img, gray, COLOR_BGR2GRAY);
     resize(gray, smallImg, Size(), 1, 1, INTER_LINEAR_EXACT);
@@ -44,25 +34,29 @@ void detect(
         Size(30, 30));
     t = (double)getTickCount() - t;
     printf("detection time = %g ms\n", t * 1000 / getTickFrequency());
-    for (size_t i = 0; i < faces.size(); i++) {
-        Rect r = faces[i];
-        Mat smallImgROI;
-        std::vector<Rect> nestedObjects;
-        Point center;
-        Scalar color = colors[i % 8];
-        int radius;
-        double aspect_ratio = (double)r.width / r.height;
-        if (0.75 < aspect_ratio && aspect_ratio < 1.3) {
-            center.x = cvRound((r.x + r.width * 0.5));
-            center.y = cvRound((r.y + r.height * 0.5));
-            radius = cvRound((r.width + r.height) * 0.25);
-            circle(img, center, radius, color, 3, 8, 0);
-        } else
-            rectangle(img, Point(cvRound(r.x), cvRound(r.y)),
-                Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1))),
-                color, 3, 8, 0);
-        if (nestedCascade.empty())
-            continue;
+
+
+    if (faces.empty()) {
+        return std::nullopt;
+    }
+
+    Point center;
+    Rect r = faces[0];
+    Mat smallImgROI;
+    std::vector<Rect> nestedObjects;
+    Scalar color = Scalar(255, 0, 0);
+    int radius;
+    double aspect_ratio = (double)r.width / r.height;
+    if (0.75 < aspect_ratio && aspect_ratio < 1.3) {
+        center.x = cvRound((r.x + r.width * 0.5));
+        center.y = cvRound((r.y + r.height * 0.5));
+        radius = cvRound((r.width + r.height) * 0.25);
+        circle(img, center, radius, color, 3, 8, 0);
+    } else
+        rectangle(img, Point(cvRound(r.x), cvRound(r.y)),
+            Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1))),
+            color, 3, 8, 0);
+    if (!nestedCascade.empty()) {
         smallImgROI = smallImg(r);
         nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
             1.1, 2, 0
@@ -79,6 +73,7 @@ void detect(
             circle(img, center, radius, color, 3, 8, 0);
         }
     }
+    return center;
 }
 
 } // namespace

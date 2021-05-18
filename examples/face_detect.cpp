@@ -6,7 +6,6 @@ using namespace cv;
 
 int main()
 {
-
     Mat frame, image;
     CascadeClassifier cascade, nestedCascade;
 
@@ -28,8 +27,11 @@ int main()
         return -1;
     }
 
-    std::cout << "Detecting face(s) in " << inputName << std::endl;
-    detect(image, cascade, nestedCascade);
+    std::cout << "Detecting face in " << inputName << std::endl;
+    auto center = detect_face(image, cascade, nestedCascade);
+    if (center) {
+        std::cout << "Detected face at " << *center << std::endl;
+    }
     imshow("result", image);
     waitKey(0);
 
