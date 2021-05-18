@@ -1,15 +1,13 @@
 
-#include "opencv2/highgui.hpp"
-#include "opencv2/objdetect.hpp"
+#include "detect_face.hpp"
 
 #include <iostream>
 #include <thread>
 
-#include "detect_face.hpp"
-
 using namespace cv;
 
-int main() {
+int main()
+{
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
 
@@ -26,8 +24,8 @@ int main() {
 
     bool stop = false;
     std::thread t([&stop] {
-      waitKey(0);
-      stop = true;
+        waitKey(0);
+        stop = true;
     });
 
     Mat image;
@@ -40,4 +38,6 @@ int main() {
     }
 
     t.join();
+
+    return 0;
 }

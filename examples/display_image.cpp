@@ -3,10 +3,11 @@
 
 using namespace cv;
 
-int main() {
+int main()
+{
     Mat image = imread("../images/Lenna.png", 1);
     if (!image.data) {
-        std::cout <<"No image data" <<std::endl;
+        std::cout << "No image data" << std::endl;
         return -1;
     }
     namedWindow("Display Image", WINDOW_AUTOSIZE);

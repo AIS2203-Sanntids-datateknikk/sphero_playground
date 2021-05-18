@@ -1,12 +1,13 @@
+#include "detect_face.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/objdetect.hpp"
-#include <iostream>
 
-#include "detect_face.hpp"
+#include <iostream>
 
 using namespace cv;
 
-int main() {
+int main()
+{
 
     Mat frame, image;
     CascadeClassifier cascade, nestedCascade;
