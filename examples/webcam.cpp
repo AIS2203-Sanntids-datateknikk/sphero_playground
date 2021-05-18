@@ -23,19 +23,19 @@ int main()
     }
 
     bool stop = false;
-    std::thread t([&stop] {
-        waitKey(0);
-        stop = true;
-    });
 
     Mat image;
     VideoCapture capture(0);
+    std::thread t([&stop, &capture, &image, &cascade, &nestedCascade] {
+        while (!stop && capture.isOpened()) {
+            capture >> image;
+            detect(image, cascade, nestedCascade);
+            imshow("Display Image", image);
+        }
+    });
 
-    while (!stop && capture.isOpened()) {
-        capture >> image;
-        detect(image, cascade, nestedCascade);
-        imshow("Display Image", image);
-    }
+    waitKey(0);
+    stop = true;
 
     t.join();
 
