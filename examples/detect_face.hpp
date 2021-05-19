@@ -9,7 +9,7 @@
 #include <iostream>
 #include <optional>
 
-namespace
+namespace example
 {
 
 std::optional<cv::Point> detect_face(

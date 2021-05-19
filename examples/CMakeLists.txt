@@ -10,8 +10,5 @@ target_link_libraries(face_detect CONAN_PKG::opencv)
 add_executable(webcam webcam.cpp)
 target_link_libraries(webcam CONAN_PKG::opencv)
 
-add_executable(server udp/server.cpp)
-target_link_libraries(server CONAN_PKG::opencv CONAN_PKG::boost)
-
-add_executable(client udp/client.cpp)
-target_link_libraries(client CONAN_PKG::opencv CONAN_PKG::boost)
+add_subdirectory(udp)
+add_subdirectory(thrift)

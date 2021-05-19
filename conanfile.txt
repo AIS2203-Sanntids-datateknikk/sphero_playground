@@ -1,6 +1,7 @@
 [requires]
 opencv/4.5.2
 boost/1.71.0
+thrift/0.14.1
 
 [generators]
 cmake
