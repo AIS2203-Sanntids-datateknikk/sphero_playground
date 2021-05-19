@@ -3,7 +3,6 @@
 #define OPENCV___IMAGESERVICEHANDLER_HPP
 
 #include <opencv2/objdetect.hpp>
-
 #include <thrift/ImageService.h>
 
 namespace example
@@ -17,7 +16,6 @@ public:
 
 private:
     cv::CascadeClassifier cascade_;
-    cv::CascadeClassifier nestedCascade_;
 };
 
 } // namespace example

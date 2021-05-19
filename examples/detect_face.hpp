@@ -15,7 +15,7 @@ namespace example
 std::optional<cv::Point> detect_face(
     cv::Mat& img,
     cv::CascadeClassifier& cascade,
-    cv::CascadeClassifier& nestedCascade)
+    std::optional<cv::CascadeClassifier> nestedCascade = std::nullopt)
 {
     double t;
     std::vector<cv::Rect> faces;
@@ -53,9 +53,9 @@ std::optional<cv::Point> detect_face(
         rectangle(img, cv::Point(cvRound(r.x), cvRound(r.y)),
             cv::Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1))),
             color, 3, 8, 0);
-    if (!nestedCascade.empty()) {
+    if (nestedCascade && !nestedCascade->empty()) {
         smallImgROI = smallImg(r);
-        nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
+        nestedCascade->detectMultiScale(smallImgROI, nestedObjects,
             1.1, 2, 0
                 //|CASCADE_FIND_BIGGEST_OBJECT
                 //|CASCADE_DO_ROUGH_SEARCH
