@@ -16,17 +16,21 @@ ImageServiceHandler::ImageServiceHandler()
     }
 }
 
-void ImageServiceHandler::detect_face(thrift::Point& _return, const std::string& data)
+void ImageServiceHandler::detect_face(thrift::FaceDetection& _return, const std::string& data)
 {
     std::vector<uchar> tmp(data.begin(), data.end());
     std::cout << data.size() << std::endl;
     Mat image = imdecode(tmp, 1);
-    auto point = example::detect_face(image, cascade_);
-    if (point) {
-        _return.x = point->x;
-        _return.y = point->y;
+    auto detect = example::detect_face(image, cascade_);
+    if (detect) {
+        _return.detected = true;
+        _return.rect.x = detect->x;
+        _return.rect.y = detect->y;
+        _return.rect.width = detect->width;
+        _return.rect.height = detect->height;
+        _return.__set_rect(_return.rect);
+
     } else {
-        _return.x = -1;
-        _return.y = -1;
+        _return.detected = false;
     }
 }

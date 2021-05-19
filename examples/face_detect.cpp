@@ -28,9 +28,9 @@ int main()
     }
 
     std::cout << "Detecting face in " << inputName << std::endl;
-    auto center = example::detect_face(image, cascade, nestedCascade);
-    if (center) {
-        std::cout << "Detected face at " << *center << std::endl;
+    auto detect = example::detect_face(image, cascade, nestedCascade);
+    if (detect) {
+        std::cout << "Detected face at [" << detect->x << ", " << detect->y << "]" << std::endl;
     }
     imshow("result", image);
     waitKey(0);

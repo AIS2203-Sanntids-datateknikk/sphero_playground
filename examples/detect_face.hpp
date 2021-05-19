@@ -12,7 +12,7 @@
 namespace example
 {
 
-std::optional<cv::Point> detect_face(
+std::optional<cv::Rect> detect_face(
     cv::Mat& img,
     cv::CascadeClassifier& cascade,
     std::optional<cv::CascadeClassifier> nestedCascade = std::nullopt)
@@ -37,22 +37,14 @@ std::optional<cv::Point> detect_face(
         return std::nullopt;
     }
 
-    cv::Point center;
     cv::Rect r = faces[0];
     cv::Mat smallImgROI;
     std::vector<cv::Rect> nestedObjects;
     cv::Scalar color = cv::Scalar(255, 0, 0);
     int radius;
-    double aspect_ratio = (double)r.width / r.height;
-    if (0.75 < aspect_ratio && aspect_ratio < 1.3) {
-        center.x = cvRound((r.x + r.width * 0.5));
-        center.y = cvRound((r.y + r.height * 0.5));
-        radius = cvRound((r.width + r.height) * 0.25);
-        circle(img, center, radius, color, 3, 8, 0);
-    } else
-        rectangle(img, cv::Point(cvRound(r.x), cvRound(r.y)),
-            cv::Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1))),
-            color, 3, 8, 0);
+    rectangle(img, cv::Point(cvRound(r.x), cvRound(r.y)),
+        cv::Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1))),
+        color, 3, 8, 0);
     if (nestedCascade && !nestedCascade->empty()) {
         smallImgROI = smallImg(r);
         nestedCascade->detectMultiScale(smallImgROI, nestedObjects,
@@ -63,6 +55,7 @@ std::optional<cv::Point> detect_face(
                 | cv::CASCADE_SCALE_IMAGE,
             cv::Size(30, 30));
 
+        cv::Point center;
         for (const auto& nr : nestedObjects) {
             center.x = cvRound((r.x + nr.x + nr.width * 0.5));
             center.y = cvRound((r.y + nr.y + nr.height * 0.5));
@@ -70,9 +63,9 @@ std::optional<cv::Point> detect_face(
             circle(img, center, radius, color, 3, 8, 0);
         }
     }
-    return center;
+    return r;
 }
 
-} // namespace
+} // namespace example
 
 #endif //OPENCV___DETECT_FACE_HPP

@@ -12,7 +12,7 @@ class ImageServiceHandler : virtual public thrift::ImageServiceIf
 {
 public:
     ImageServiceHandler();
-    void detect_face(thrift::Point& _return, const std::string& data) override;
+    void detect_face(thrift::FaceDetection& _return, const std::string& data) override;
 
 private:
     cv::CascadeClassifier cascade_;

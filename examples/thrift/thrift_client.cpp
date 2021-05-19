@@ -15,6 +15,16 @@ using namespace ::apache::thrift::transport;
 
 using namespace cv;
 
+namespace
+{
+
+    cv::Rect convert(const example::thrift::Rect& r)
+    {
+        return cv::Rect(r.x, r.y, r.width, r.height);
+    }
+
+}
+
 int main()
 {
     Mat image = imread("../images/Lenna.png", 1);
@@ -33,13 +43,21 @@ int main()
         std::unique_ptr<ImageServiceClient> client(new ImageServiceClient(protocol));
         transport->open();
 
-        example::thrift::Point p;
+        example::thrift::FaceDetection detection;
         std::string data(buf.begin(), buf.end());
-        client->detect_face(p, data);
-
-        std::cout << "Detected face: x=" << std::to_string(p.x) << ", y=" << std::to_string(p.y) << std::endl;
-
+        client->detect_face(detection, data);
         transport->close();
+
+        if (detection.detected) {
+            std::cout << "Detected face: x=" << std::to_string(detection.rect.x) << ", y=" << std::to_string(detection.rect.y) << std::endl;
+
+            namedWindow("Display Image", WINDOW_AUTOSIZE);
+            rectangle(image, convert(detection.rect), cv::Scalar(255, 0, 0), 3, 8);
+            imshow("Display Image", image);
+            waitKey(0);
+
+        }
+
     } catch (std::exception& ex) {
         std::cerr << ex.what() << std::endl;
     }
