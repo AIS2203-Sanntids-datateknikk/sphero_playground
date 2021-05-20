@@ -15,6 +15,6 @@ struct FaceDetection {
 
 service ImageService {
 
-    FaceDetection detect_face(1: string data)
+    FaceDetection detect_face(1: binary data)
 
 }

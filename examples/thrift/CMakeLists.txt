@@ -1,7 +1,7 @@
 
-
 set(generatedSourcesDir "${CMAKE_BINARY_DIR}/generated")
 set(thriftCppSourcesDir "${generatedSourcesDir}/thrift")
+set(thriftPythonSourcesDir "${CMAKE_CURRENT_SOURCE_DIR}/python")
 
 file(MAKE_DIRECTORY "${generatedSourcesDir}")
 file(MAKE_DIRECTORY "${thriftCppSourcesDir}")
@@ -16,6 +16,14 @@ execute_process(
         "${THRIFT_EXECUTABLE}"
         "--gen" "cpp:no_skeleton"
         "--out" "${thriftCppSourcesDir}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/service.thrift"
+)
+
+execute_process(
+        COMMAND
+        "${THRIFT_EXECUTABLE}"
+        "--gen" "py"
+        "--out" "${thriftPythonSourcesDir}"
         "${CMAKE_CURRENT_SOURCE_DIR}/service.thrift"
 )
 
