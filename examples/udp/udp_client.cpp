@@ -47,9 +47,9 @@ int main()
         udp::endpoint sender_endpoint;
         std::array<char, 128> recv_buf{};
         auto len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
-        std::string message(recv_buf.begin(), recv_buf.begin() + len);
+        std::string message(recv_buf.begin(), recv_buf.begin() + static_cast<int>(len));
 
-        std::cout << "server responded with: " << message  << std::endl;
+        std::cout << "Server responded with: " << message  << std::endl;
 
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
