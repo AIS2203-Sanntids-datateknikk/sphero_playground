@@ -16,9 +16,10 @@ using namespace ::apache::thrift::server;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 
-int main()
+int main(int argc, const char** argv)
 {
-    const int port = 9090;
+    cv::CommandLineParser parser(argc, argv,"{port||}");
+    const auto port = parser.get<int>("port");
 
     std::shared_ptr<ImageServiceHandler> handler(new ImageServiceHandler());
     std::shared_ptr<TProcessor> processor(new ImageServiceProcessor(handler));

@@ -25,8 +25,13 @@ namespace
 
 }
 
-int main()
+int main(int argc, const char** argv)
 {
+    cv::CommandLineParser parser(argc, argv,"{host||}{port||}");
+
+    const auto port = parser.get<int>("port");
+    const auto host = parser.get<std::string>("host");
+
     Mat image = imread("../images/Lenna.png", 1);
     if (!image.data) {
         std::cout << "No image data" << std::endl;
@@ -37,7 +42,7 @@ int main()
     cv::imencode(".jpg", image, buf);
 
     try {
-        std::shared_ptr<TTransport> socket(new TSocket("localhost", 9090));
+        std::shared_ptr<TTransport> socket(new TSocket(host, port));
         std::shared_ptr<TFramedTransport> transport(new TFramedTransport(socket));
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         std::unique_ptr<ImageServiceClient> client(new ImageServiceClient(protocol));

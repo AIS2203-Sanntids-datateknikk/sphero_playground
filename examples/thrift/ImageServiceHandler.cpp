@@ -3,8 +3,6 @@
 
 #include "../detect_face.hpp"
 
-#include <utility>
-
 using namespace cv;
 using namespace example;
 
