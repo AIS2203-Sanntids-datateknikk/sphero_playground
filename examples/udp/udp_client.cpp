@@ -12,8 +12,12 @@ namespace
     const int MAX_UDP_PACKET_SIZE = 65508;
 }
 
-int main()
+int main(int argc, const char** argv)
 {
+    cv::CommandLineParser parser(argc, argv,"{host||}{port||}");
+
+    const auto port = parser.get<int>("port");
+    const auto host = parser.get<std::string>("host");
 
     Mat image = imread("../images/Lenna.png", 1);
     if (!image.data) {
@@ -37,7 +41,7 @@ int main()
         udp::socket socket(io_service);
         socket.open(udp::v4());
 
-        udp::endpoint receiver_endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 13);
+        udp::endpoint receiver_endpoint(boost::asio::ip::address::from_string(host), port);
         socket.send_to(boost::asio::buffer(buf), receiver_endpoint);
 
         udp::endpoint sender_endpoint;
