@@ -3,4 +3,4 @@
 cmake-build-debug
 cmake-build-release
 
-/**/thrift/python/service
+/**/thrift/**/python/*service
