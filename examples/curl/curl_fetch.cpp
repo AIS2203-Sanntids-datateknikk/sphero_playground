@@ -66,5 +66,5 @@ int main(int argc, const char** argv)
 
     curl_global_cleanup();
 
-    return 1;
+    return 0;
 }
