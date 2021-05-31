@@ -29,7 +29,6 @@ int main(int argc, const char** argv)
     double pos0 = client->get_servo_position(0, 90);
     double pos1 = client->get_servo_position(1, 90);
 
-
     namedWindow("input");
 
     int input;
@@ -45,12 +44,12 @@ int main(int argc, const char** argv)
             pos1 -= step;
             client->move_servo_position(1, pos1, 90);
         } else if (input == 97) { // a
-            pos0 -= step;
-            client->move_servo_position(0, pos0, 90);
-        } else if (input == 100) { // s
             pos0 += step;
             client->move_servo_position(0, pos0, 90);
-        } else if (input == 113) { // q
+        } else if (input == 100) { // s
+            pos0 -= step;
+            client->move_servo_position(0, pos0, 90);
+        } else if (input == 113 || input == -1) { // q
             break;
         }
         std::cout << "[" << client->get_servo_position(0, 90) << ", " << client->get_servo_position(1, 90) << "]" << std::endl;
