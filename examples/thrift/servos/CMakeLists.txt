@@ -40,5 +40,5 @@ target_include_directories(servo_client_test
         "${generatedSourcesDir}")
 target_link_libraries(servo_client_test
         PUBLIC
-        CONAN_PKG::thrift
-        CONAN_PKG::opencv)
+        curl_fetch
+        CONAN_PKG::thrift)
