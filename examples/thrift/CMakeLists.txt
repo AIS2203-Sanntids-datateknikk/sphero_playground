@@ -6,3 +6,4 @@ endif ()
 
 add_subdirectory(servos)
 add_subdirectory(rpi_cam)
+add_subdirectory(sphero)

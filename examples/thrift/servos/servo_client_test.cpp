@@ -5,8 +5,6 @@
 
 #include <curl_webcam_fetch.hpp>
 #include <iostream>
-#include <mutex>
-
 
 using namespace example::thrift;
 
@@ -21,8 +19,6 @@ int main(int argc, const char** argv)
     CommandLineParser parser(argc, argv, "{host||}{port||}");
     const auto host = parser.get<std::string>("host");
     const auto port = parser.get<int>("port");
-
-    std::mutex mtx;
 
     try {
         std::shared_ptr<TTransport> socket(new TSocket(host, port));
