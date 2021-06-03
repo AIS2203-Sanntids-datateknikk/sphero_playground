@@ -26,7 +26,7 @@ example::curl_webcam_fetcher::curl_webcam_fetcher(const std::string& host)
 bool example::curl_webcam_fetcher::fetch(cv::Mat& image)
 {
     CURLcode res = curl_easy_perform(curl_);
-    if (res == 0) {
+    if (res == 0 && !stream_.empty()) {
         cv::imdecode(stream_, cv::IMREAD_UNCHANGED, &image);
         stream_.clear();
         return true;
