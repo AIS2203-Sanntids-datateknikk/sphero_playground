@@ -41,5 +41,6 @@ target_include_directories(sphero_client_test
         "${generatedSourcesDir}")
 target_link_libraries(sphero_client_test
         PUBLIC
+        curl_fetch
         CONAN_PKG::boost
         CONAN_PKG::thrift)

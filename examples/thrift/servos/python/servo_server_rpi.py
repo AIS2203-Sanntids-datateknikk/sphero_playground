@@ -14,6 +14,7 @@ class ServoHandler:
 
     def __init__(self):
         self.servo = pi_servo_hat.PiServoHat()
+        self.servo.restart()
 
     def get_pwm_frequency(self):
         return self.servo.get_pwm_frequency()

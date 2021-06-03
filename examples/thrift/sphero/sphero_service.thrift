@@ -41,4 +41,6 @@ service SpheroService {
 
     SensorData sense()
 
+    void drive_with_heading(1: i32 speed, 2: i32 heading, 3: i32 flags)
+
 }

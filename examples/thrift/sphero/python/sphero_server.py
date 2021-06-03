@@ -11,7 +11,7 @@ from thrift.server import TServer
 import os
 import sys
 import time
-sys.path.append(os.path.abspath("~/sphero-sdk-raspberrypi-python/sphero_sdk"))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../sphero-sdk-raspberrypi-python')))
 
 from sphero_sdk import SpheroRvrObserver
 from sphero_sdk import RvrStreamingServices
@@ -29,6 +29,8 @@ class SpheroHandler:
         self.rvr = SpheroRvrObserver()
         self.rvr.wake()
         time.sleep(2)
+
+        self. rvr.reset_yaw()
 
         self.rvr.sensor_control.add_sensor_data_handler(
             service=RvrStreamingServices.imu,
@@ -51,6 +53,15 @@ class SpheroHandler:
 
     def sense(self):
         return ttypes.SensorData(self.imu, self.accelerometer, self.ambient, self.color)
+
+    def drive_with_heading(self, speed, heading, flags):
+        #print(f"speed={speed}, heading={heading}, flags={flags}")
+        self.rvr.drive_with_heading(
+            speed=speed,  # Valid speed values are 0-255
+            heading=heading,  # Valid heading values are 0-359
+            flags=flags
+        )
+        time.sleep(0.1)
 
     def imu_handler(self, imu_data):
         data = imu_data["IMU"]
