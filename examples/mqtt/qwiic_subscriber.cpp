@@ -8,8 +8,6 @@
 namespace
 {
 
-const auto TOPIC = "tof_readings";
-
 /**
  * Local callback & listener class for use with the client connection.
  * This is primarily intended to receive messages, but it will also monitor
@@ -24,7 +22,8 @@ class callback : public virtual mqtt::callback
 
     // (Re)connection success
     void connected(const std::string& cause) override {
-        cli_.subscribe(TOPIC, 1);
+        cli_.subscribe("qwiic/+", 1);
+        cli_.subscribe("sphero/+", 1);
     }
 
     // Callback for when the connection is lost.
