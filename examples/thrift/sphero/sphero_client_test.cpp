@@ -40,6 +40,7 @@ int main(int argc, const char** argv)
     desc.add_options()("host", po::value<std::string>(), "Remote host");
 
     if (argc == 1) {
+        std::cerr << "Missing program arguments.." << std::endl;
         return -1;
     }
 
@@ -59,8 +60,6 @@ int main(int argc, const char** argv)
         SensorData data;
         client->sense(data);
         std::cout << data << std::endl;
-
-
 
         bool stopDriving = false;
         int heading = 0;

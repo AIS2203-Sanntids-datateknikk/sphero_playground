@@ -12,4 +12,5 @@ target_link_libraries(webcam CONAN_PKG::opencv)
 
 add_subdirectory(curl)
 add_subdirectory(udp)
+add_subdirectory(mqtt)
 add_subdirectory(thrift)
