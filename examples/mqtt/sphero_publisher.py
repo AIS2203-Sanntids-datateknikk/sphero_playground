@@ -3,7 +3,6 @@ import json
 import time
 import sys
 import os
-import threading
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../sphero-sdk-raspberrypi-python')))
 

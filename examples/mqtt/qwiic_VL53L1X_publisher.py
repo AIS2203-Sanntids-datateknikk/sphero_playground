@@ -79,7 +79,7 @@ try:
             'rear_distance': rear_distance
         }
         data = json.dumps(reading)
-        client.publish("qwiic/tof", data)
+        client.publish("qwiic/vl53l1x", data)
 
 except KeyboardInterrupt:
     print("Keyboard interrupt..")
