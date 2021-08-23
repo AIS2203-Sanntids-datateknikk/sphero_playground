@@ -92,7 +92,7 @@ int main(int argc, const char** argv)
                     break;
                 }
 
-               //client->drive_with_heading(speed, heading, flags);
+               client->drive_with_heading(speed, heading, flags);
 
             }
 
