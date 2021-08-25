@@ -1,3 +1,3 @@
-## OpenCV C++ example
+## Sphero playground
 
-Invoke `run_conan_install.sh` prior to configuring and building the project.
+Various code designed to work the sphero robot + sparkfun kit
